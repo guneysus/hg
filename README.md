@@ -16,10 +16,10 @@ yet.
 ```csharp
 using static Hg.HgExtensions;
 
-var cursor = ul >
-				li / "Item #1"
-				+ li / "Item #2"
-				+ li / "Item #3";
+var cursor = ul > 
+  li / "Item #1"
+  + li / "Item #2"
+	+ li / "Item #3";
 
 var html = cursor.Html();
 
