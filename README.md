@@ -1,6 +1,6 @@
 # HG: DSL for Html Generation
 
-![Example](./img/img/hg_1.png)
+![Example](./img/hg_1.png)
 
 HG, abuses operator overloads in C# to implement DSL (Domain Specific Language) for HTML generation.
 
