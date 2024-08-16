@@ -1,9 +1,4 @@
-﻿using Shouldly;
-using System.Text;
-using Xunit.Abstractions;
-using static Hg.HgExtensions;
-
-namespace Hg.Tests;
+﻿namespace Hg.Tests;
 
 public class VisitorTests
 {
@@ -47,5 +42,19 @@ public class VisitorTests
                 + li / "Item #3";
         string html = cursor.Html();
         html.ShouldBe("<ul><li>Item #1</li><li>Item #2</li><li>Item #3</li></ul>");
+    }
+
+    [Fact]
+    public void Get_Html_Output_With_Attributes()
+    {
+        var cursor = ul / ("id", "app") >
+                li / ("class", "item-1st") / "Item #1"
+                + li / ("class", "item-2nd") / "Item #2"
+                + li / ("class", "item-3rd") / "Item #3";
+
+        //cursor.Attributes.Clear();
+
+        string html = cursor.Html();
+        html.ShouldBe("""<ul id="app"><li class="item-1st">Item #1</li><li class="item-2nd">Item #2</li><li class="item-3rd">Item #3</li></ul>""");
     }
 }
