@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Hg;
@@ -16,6 +19,9 @@ public class Node
     public string Text { get; set; }
 
     public NodeList Children { get; set; } = new NodeList();
+
+    public Dictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
+
     public Node Parent { get; set; }
     public string TagName { get; }
 
@@ -45,6 +51,14 @@ public class Node
     public static Node operator /(Node left, string text)
     {
         left.Text = text;
+        return left;
+    }
+
+    public static Node operator /(Node left, (string, object) attr)
+    {
+        var (key, value) = attr;
+
+        left.Attributes.Add(key, value);
         return left;
     }
 
@@ -91,7 +105,18 @@ public class Node
         var sb = new StringBuilder();
         this.GetRoot().VisitTree(onEnter: node =>
         {
-            sb.Append($"<{node.TagName}>");
+            sb.Append($"<{node.TagName}");
+
+            if (node.Attributes.Any())
+            {
+                foreach (var (k, v) in node.Attributes)
+                {
+                    sb.Append($" {k}=\"{v}\"");
+                }
+            }
+
+            sb.Append(">");
+
         }, onExit: node =>
         {
             if (!string.IsNullOrEmpty(node.Text))

@@ -1,7 +1,5 @@
-﻿using Shouldly;
-using static Hg.HgExtensions;
+﻿namespace Hg.Tests;
 
-namespace Hg.Tests;
 public class DslTests
 {
     [Fact]
@@ -59,7 +57,6 @@ public class DslTests
         var cursor = li / "Item #1" > p > strong / "Replaced Item #1";
         cursor.Children.Count().ShouldBe(0);
         cursor.Text.ShouldBe("Replaced Item #1");
-
 
         cursor.GetRoot().TagName.ShouldBe("li");
         cursor.GetRoot().Children.Count().ShouldBe(1);
